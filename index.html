@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Chrome Devtool tips</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/black.css" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h3>浅谈现代化SSR</h3>
+        </section>
+
+        <section>
+          <section>
+            <h4>在讲SSR之前...</h4>
+          </section>
+          <section>
+            <p>先讲下CSR（Client Side Rendering）（客户端渲染）</p>
+          </section>
+          <section>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                Vue/React/Angular 为主流的SPA（Single Page Application）单页应用
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                页面渲染由JS负责进行
+              </li>
+            </ul>
+          </section>
+          <section>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                Vitrual Dom
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                前端路由
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                局部刷新
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h5>缺点</h5>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                首屏渲染慢
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                不利于SEO
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h4>什么SSR</h4>
+          </section>
+          <section>
+            <p>服务端渲染（Server Side Rendering）</p>
+          </section>
+          <section>
+            <p>在服务器端完成把数据和模板转换成最终的 HTML</p>
+          </section>
+          <section>
+            <p>SSR 实际上并没有限定语言和框架</p>
+          </section>
+          <section>
+            <p>包括但不仅限于...</p>
+          </section>
+          <section>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                <h5>传统的PHP, jsp，asp的模板</h5>
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                NodeJS领域，包含了React或者Vue这种<em>前后端同构</em>的模式
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                也包含了Express/Koa/Egg <em>基于模板渲染的</em>模式
+              </li>
+            </ul>
+          </section>
+          <section>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                那你说的SSR岂不是回到前后端不分离？
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                前端搞这么多名词很高大上吗？
+              </li>
+            </ul>
+          </section>
+          <section>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                可以这样说。。不完全正确，在首次加载时对服务端压力较大，其余都是客户端的渲染
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                前端娱乐圈（划掉）
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h5>优点</h5>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                SEO👍
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                首屏渲染👍
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h5>缺点</h5>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                首次加载服务端压力大
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                Bug较难定位，前后端踢皮球
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h4>SSR可以应用的场景</h4>
+          <ul style="font-size: 60%;">
+            <li style="margin-bottom: 0.8em;" class="fragment">对SEO有要求</li>
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              对首屏渲染时间有要求（如一些活动页H5）
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h4>基于Vue的服务端渲染社区成熟的解决方案</h4>
+          <ul style="font-size: 60%;">
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              <a href="https://nuxtjs.org/">Nuxt.js</a>
+            </li>
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              <a href="https://github.com/chrisvfritz/prerender-spa-plugin">
+                预渲染解决方案
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h5>Console 控制台</h5>
+            <ul>
+              <li class="fragment">应用日志输出</li>
+              <li class="fragment">js调试引擎</li>
+              <li class="fragment">log formatter</li>
+            </ul>
+          </section>
+          <section>
+            <p>log formatter</p>
+            <div data-markdown>
+              <script type="text/template">
+                > demo function
+                ```js
+                function warn(msg) {
+                  // eslint-disable-next-line no-console
+                  console.warn(
+                    `%c Console warn %c ${msg}`,
+                    'background:#f90;padding:1px;border-radius:3px;color:#fff',
+                    'background:transparent'
+                  )
+                }
+                ```
+                ```js
+                function error(msg) {
+                  // eslint-disable-next-line no-console
+                  console.error(
+                    `%c Console error %c ${msg}`,
+                    'background:#e30;padding:1px;border-radius:3px;color:#fff',
+                    'background:transparent'
+                  )
+                }
+                ```
+              </script>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <h4>参考文献</h4>
+          <ul style="font-size: 60%;"></ul>
+        </section>
+
+        <section>
+          <section>
+            <h4>以上资料全部Google获得</h4>
+            <h4>关于服务端渲染，本人也是一知半解</h4>
+            <h4>如有错误，欢迎指正</h4>
+          </section>
+          <section>
+            <h4>感谢大家的聆听</h4>
+            <p style="position: fixed; bottom: 16px; left: 16px;">以上。</p>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        dependencies: [
+          { src: "plugin/markdown/marked.js" },
+          { src: "plugin/markdown/markdown.js" },
+          { src: "plugin/notes/notes.js", async: true },
+          { src: "plugin/highlight/highlight.js", async: true },
+        ],
+      });
+    </script>
+  </body>
+</html>
