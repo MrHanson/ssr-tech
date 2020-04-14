@@ -18,13 +18,13 @@
 
     <!-- Printing and PDF exports -->
     <script>
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.type = "text/css";
+      var link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.type = 'text/css'
       link.href = window.location.search.match(/print-pdf/gi)
-        ? "css/print/pdf.css"
-        : "css/print/paper.css";
-      document.getElementsByTagName("head")[0].appendChild(link);
+        ? 'css/print/pdf.css'
+        : 'css/print/paper.css'
+      document.getElementsByTagName('head')[0].appendChild(link)
     </script>
   </head>
   <body>
@@ -34,7 +34,10 @@
           <section>
             <h1>浅谈现代化SSR</h1>
             <p>
-              <small>Created by <a href="https://github.com/MrHanson">Mr_Hanson</a></small>
+              <small
+                >Created by
+                <a href="https://github.com/MrHanson">Mr_Hanson</a></small
+              >
             </p>
           </section>
         </section>
@@ -44,7 +47,7 @@
             <h4>在讲SSR之前...</h4>
           </section>
           <section>
-            <h4>先讲下CSR（Client Side Rendering）（客户端渲染）</h4>
+            <h4>先讲下CSR(Client Side Rendering)(客户端渲染)</h4>
           </section>
           <section>
             <ul style="font-size: 60%;">
@@ -74,12 +77,12 @@
             </ul>
           </section>
           <section>
-            <h5>CSR优点</h5>
+            <h5>CSR（SPA）优点</h5>
             <ul style="font-size: 60%;">
               <li style="margin-bottom: 0.8em;" class="fragment">
                 比起传统JQuery好维护，性能更优，更适合大型Web项目
               </li>
-              <li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
                 减轻服务端压力
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
@@ -153,16 +156,22 @@
               <li style="margin-bottom: 0.8em;" class="fragment">
                 A：前端娱乐圈（划掉）
               </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                <img
+                  src="http://biaoqingbao.xin/wp-content/uploads/2017/09/1632.png"
+                />
+              </li>
             </ul>
           </section>
           <section>
             <h5>优点</h5>
             <ul style="font-size: 60%;">
               <li style="margin-bottom: 0.8em;" class="fragment">
-                SEO👍
+                更好的
+                SEO👍，由于搜索引擎爬虫抓取工具可以直接查看完全渲染的页面。
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
-                首屏渲染👍
+                首屏渲染👍，更快的内容到达时间 (time-to-content)
               </li>
             </ul>
           </section>
@@ -180,6 +189,121 @@
         </section>
 
         <section>
+          <section>
+            <h4>Talk is cheap，show me the code</h4>
+          </section>
+          <section>
+            <h4>我们用Node.js实现一个简易的SSR</h4>
+          </section>
+          <section>
+            <div data-markdown>
+              <script type="text/template">
+                ```js
+                // data.bat.js
+                // 模拟Modal层
+                const departmentTree = {
+                  name: '中国',
+                  children: [
+                    {
+                      name: '广东',
+                      children: [
+                        {
+                          name: '深圳',
+                          children: [
+                            {
+                              name: '南山',
+                            },
+                            {
+                              name: '宝安',
+                            },
+                            {
+                              name: '龙华',
+                            },
+                            {
+                              name: '福田',
+                            },
+                            {
+                              name: '罗湖',
+                            },
+                            // more distinct...
+                          ],
+                        },
+                        {
+                          name: '广州',
+                          children: [
+                            {
+                              name: '白云',
+                            },
+                            {
+                              name: '越秀',
+                            },
+                            {
+                              name: '天河',
+                            },
+                            {
+                              name: '海珠',
+                            },
+                            // more distinct...
+                          ],
+                        },
+                      ],
+                    },
+                    // ...more province
+                  ]
+                }
+                module.exports = {
+                  msg: 'Hello World',
+                  departmentTree,
+                }
+
+                ```
+              </script>
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              <script type="text/template">
+                ```js
+                const express = require('express') // 一个Node.js的MVC框架
+                const app = express()
+                const port = process.env.PORT || 3000
+
+                // node
+                const { msg, departmentTree = {} } = require('./data.bat.js')
+
+                // 原理其实就是拼接模板字符串
+                const content = `<div id="msg">${msg}</div>`
+                const createLi = name => `<li>${name}</li>`
+                const treeRender = tree => {
+                  if (!tree.children || JSON.stringify(tree.children) === '[]') {
+                    return createLi(tree.name || '')
+                  }
+                  return `<div id="tree-wrap">
+                    ${tree.name || ''}
+                    <ul>
+                      ${Array.isArray(tree.children) && tree.children.map(child => {
+                        treeRender(child)
+                      }).join('')}
+                    </ul>
+                  </div>`
+                }
+
+                const responseTemplate = `
+                  <div class="app">
+                    ${content}
+                    ${treeRender(departmentTree)}
+                  </div>
+                `
+                app.get('/', (req, res) => res.send(responseTemplate)
+
+                app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+                ```
+              </script>
+            </div>
+          </section>
+        </section>
+
+        <section>
           <h4>SSR可以应用的场景</h4>
           <ul style="font-size: 60%;">
             <li style="margin-bottom: 0.8em;" class="fragment">对SEO有要求</li>
@@ -193,10 +317,12 @@
           <h4>基于Vue的服务端渲染社区成熟的解决方案</h4>
           <ul style="font-size: 60%;">
             <li style="margin-bottom: 0.8em;" class="fragment">
-              <a href="https://nuxtjs.org/">Nuxt.js 适合开发应用</a>
+              <a href="https://nuxtjs.org/">Nuxt.js 适合大型应用开发</a>
             </li>
             <li style="margin-bottom: 0.8em;" class="fragment">
-              <a href="https://vuepress.vuejs.org/">VuePress 适合用于编写文档（类Hexo）</a>
+              <a href="https://vuepress.vuejs.org/">
+                VuePress 适合用于编写文档（类Hexo，wordPress）
+              </a>
             </li>
             <li style="margin-bottom: 0.8em;" class="fragment">
               <a href="https://github.com/chrisvfritz/prerender-spa-plugin">
@@ -207,18 +333,21 @@
         </section>
 
         <section>
-          <h4>参考文献</h4>
-          <ul style="font-size: 60%;"></ul>
+          <h4>Vue SSR官方指南</h4>
+          <ul style="font-size: 60%;">
+            <li>
+              <a href="https://ssr.vuejs.org/">Vue SSR Guide</a>
+            </li>
+          </ul>
         </section>
 
         <section>
           <section>
-            <h4>以上资料全部Google获得</h4>
             <h4>关于服务端渲染，本人也是一知半解</h4>
             <h4>如有错误，欢迎指正</h4>
           </section>
           <section>
-            <h4>感谢大家的聆听</h4>
+            <h4>感谢大家在百忙之中抽空来摸鱼</h4>
             <p style="position: fixed; bottom: 16px; left: 16px;">以上。</p>
           </section>
         </section>
@@ -233,12 +362,12 @@
       // - https://github.com/hakimel/reveal.js#dependencies
       Reveal.initialize({
         dependencies: [
-          { src: "plugin/markdown/marked.js" },
-          { src: "plugin/markdown/markdown.js" },
-          { src: "plugin/notes/notes.js", async: true },
-          { src: "plugin/highlight/highlight.js", async: true },
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true },
         ],
-      });
+      })
     </script>
   </body>
 </html>
