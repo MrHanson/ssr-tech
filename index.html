@@ -135,20 +135,23 @@
           <section>
             <ul style="font-size: 60%;">
               <li style="margin-bottom: 0.8em;" class="fragment">
-                那你说的SSR岂不是回到前后端不分离？
+                Q：那你说的SSR岂不是回到前后端不分离？
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
-                前端搞这么多名词很高大上吗？
+                A：可以这样说。。不完全正确，在首次加载时对服务端压力较大，其余都是客户端的渲染
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                A：React或者Vue这种<em>前后端同构</em>的模式，利用了CSR的优势
               </li>
             </ul>
           </section>
           <section>
             <ul style="font-size: 60%;">
               <li style="margin-bottom: 0.8em;" class="fragment">
-                可以这样说。。不完全正确，在首次加载时对服务端压力较大，其余都是客户端的渲染
+                Q：前端搞这么多名词很高大上吗？
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
-                前端娱乐圈（划掉）
+                A：前端娱乐圈（划掉）
               </li>
             </ul>
           </section>
@@ -190,7 +193,10 @@
           <h4>基于Vue的服务端渲染社区成熟的解决方案</h4>
           <ul style="font-size: 60%;">
             <li style="margin-bottom: 0.8em;" class="fragment">
-              <a href="https://nuxtjs.org/">Nuxt.js</a>
+              <a href="https://nuxtjs.org/">Nuxt.js 适合开发应用</a>
+            </li>
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              <a href="https://vuepress.vuejs.org/">VuePress 适合用于编写文档（类Hexo）</a>
             </li>
             <li style="margin-bottom: 0.8em;" class="fragment">
               <a href="https://github.com/chrisvfritz/prerender-spa-plugin">
@@ -198,45 +204,6 @@
               </a>
             </li>
           </ul>
-        </section>
-
-        <section>
-          <section>
-            <h5>Console 控制台</h5>
-            <ul>
-              <li class="fragment">应用日志输出</li>
-              <li class="fragment">js调试引擎</li>
-              <li class="fragment">log formatter</li>
-            </ul>
-          </section>
-          <section>
-            <p>log formatter</p>
-            <div data-markdown>
-              <script type="text/template">
-                > demo function
-                ```js
-                function warn(msg) {
-                  // eslint-disable-next-line no-console
-                  console.warn(
-                    `%c Console warn %c ${msg}`,
-                    'background:#f90;padding:1px;border-radius:3px;color:#fff',
-                    'background:transparent'
-                  )
-                }
-                ```
-                ```js
-                function error(msg) {
-                  // eslint-disable-next-line no-console
-                  console.error(
-                    `%c Console error %c ${msg}`,
-                    'background:#e30;padding:1px;border-radius:3px;color:#fff',
-                    'background:transparent'
-                  )
-                }
-                ```
-              </script>
-            </div>
-          </section>
         </section>
 
         <section>
