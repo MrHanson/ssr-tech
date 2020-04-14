@@ -201,7 +201,7 @@
                 ```js
                 // data.bat.js
                 // 模拟Modal层
-                const departmentTree = {
+                const areaTree = {
                   name: '中国',
                   children: [
                     {
@@ -253,7 +253,7 @@
                 }
                 module.exports = {
                   msg: 'Hello World',
-                  departmentTree,
+                  areaTree,
                 }
 
                 ```
@@ -269,7 +269,7 @@
                 const port = process.env.PORT || 3000
 
                 // node
-                const { msg, departmentTree = {} } = require('./data.bat.js')
+                const { msg, areaTree = {} } = require('./data.bat.js')
 
                 // 原理其实就是拼接模板字符串
                 const content = `<div id="msg">${msg}</div>`
@@ -291,7 +291,7 @@
                 const responseTemplate = `
                   <div class="app">
                     ${content}
-                    ${treeRender(departmentTree)}
+                    ${treeRender(areaTree)}
                   </div>
                 `
                 app.get('/', (req, res) => res.send(responseTemplate)
