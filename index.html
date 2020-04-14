@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
 
-    <title>Chrome Devtool tips</title>
+    <title>SSR Tech</title>
 
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/reveal.css" />
@@ -31,7 +31,12 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h3>浅谈现代化SSR</h3>
+          <section>
+            <h1>浅谈现代化SSR</h1>
+            <p>
+              <small>Created by <a href="https://github.com/MrHanson">Mr_Hanson</a></small>
+            </p>
+          </section>
         </section>
 
         <section>
@@ -39,7 +44,7 @@
             <h4>在讲SSR之前...</h4>
           </section>
           <section>
-            <p>先讲下CSR（Client Side Rendering）（客户端渲染）</p>
+            <h4>先讲下CSR（Client Side Rendering）（客户端渲染）</h4>
           </section>
           <section>
             <ul style="font-size: 60%;">
@@ -52,15 +57,36 @@
             </ul>
           </section>
           <section>
+            <h5>特点</h5>
             <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                Data Binding
+              </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
                 Vitrual Dom
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
-                前端路由
+                前端路由（History或Hash）
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
                 局部刷新
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h5>CSR优点</h5>
+            <ul style="font-size: 60%;">
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                比起传统JQuery好维护，性能更优，更适合大型Web项目
+              </li>
+              <li>
+                减轻服务端压力
+              </li>
+              <li style="margin-bottom: 0.8em;" class="fragment">
+                Once learn, write everywhere
+                <p>Vue (Weex)</p>
+                <p>React (React native)</p>
+                <p>Angular (Ionic)</p>
               </li>
             </ul>
           </section>
