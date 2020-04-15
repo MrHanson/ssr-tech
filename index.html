@@ -34,10 +34,7 @@
           <section>
             <h1>浅谈现代化SSR</h1>
             <p>
-              <small
-                >Created by
-                <a href="https://github.com/MrHanson">Mr_Hanson</a></small
-              >
+              <small>Created by <a href="https://github.com/MrHanson">Mr_Hanson</a></small>
             </p>
           </section>
         </section>
@@ -108,7 +105,7 @@
 
         <section>
           <section>
-            <h4>什么SSR</h4>
+            <h4>什么是SSR</h4>
           </section>
           <section>
             <p>服务端渲染（Server Side Rendering）</p>
@@ -157,9 +154,7 @@
                 A：前端娱乐圈（划掉）
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
-                <img
-                  src="http://biaoqingbao.xin/wp-content/uploads/2017/09/1632.png"
-                />
+                <img src="http://biaoqingbao.xin/wp-content/uploads/2017/09/1632.png" />
               </li>
             </ul>
           </section>
@@ -167,8 +162,7 @@
             <h5>优点</h5>
             <ul style="font-size: 60%;">
               <li style="margin-bottom: 0.8em;" class="fragment">
-                更好的
-                SEO👍，由于搜索引擎爬虫抓取工具可以直接查看完全渲染的页面。
+                更好的 SEO👍，由于搜索引擎爬虫抓取工具可以直接查看完全渲染的页面。
               </li>
               <li style="margin-bottom: 0.8em;" class="fragment">
                 首屏渲染👍，更快的内容到达时间 (time-to-content)
@@ -185,121 +179,6 @@
                 Bug较难定位，前后端踢皮球
               </li>
             </ul>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h4>Talk is cheap，show me the code</h4>
-          </section>
-          <section>
-            <h4>我们用Node.js实现一个简易的SSR</h4>
-          </section>
-          <section>
-            <div data-markdown>
-              <script type="text/template">
-                ```js
-                // data.bat.js
-                // 模拟Modal层
-                const areaTree = {
-                  name: '中国',
-                  children: [
-                    {
-                      name: '广东',
-                      children: [
-                        {
-                          name: '深圳',
-                          children: [
-                            {
-                              name: '南山',
-                            },
-                            {
-                              name: '宝安',
-                            },
-                            {
-                              name: '龙华',
-                            },
-                            {
-                              name: '福田',
-                            },
-                            {
-                              name: '罗湖',
-                            },
-                            // more distinct...
-                          ],
-                        },
-                        {
-                          name: '广州',
-                          children: [
-                            {
-                              name: '白云',
-                            },
-                            {
-                              name: '越秀',
-                            },
-                            {
-                              name: '天河',
-                            },
-                            {
-                              name: '海珠',
-                            },
-                            // more distinct...
-                          ],
-                        },
-                      ],
-                    },
-                    // ...more province
-                  ]
-                }
-                module.exports = {
-                  msg: 'Hello World',
-                  areaTree,
-                }
-
-                ```
-              </script>
-            </div>
-          </section>
-          <section>
-            <div data-markdown>
-              <script type="text/template">
-                ```js
-                const express = require('express') // 一个Node.js的MVC框架
-                const app = express()
-                const port = process.env.PORT || 3000
-
-                // node
-                const { msg, areaTree = {} } = require('./data.bat.js')
-
-                // 原理其实就是拼接模板字符串
-                const content = `<div id="msg">${msg}</div>`
-                const createLi = name => `<li>${name}</li>`
-                const treeRender = tree => {
-                  if (!tree.children || JSON.stringify(tree.children) === '[]') {
-                    return createLi(tree.name || '')
-                  }
-                  return `<div id="tree-wrap">
-                    ${tree.name || ''}
-                    <ul>
-                      ${Array.isArray(tree.children) && tree.children.map(child => {
-                        treeRender(child)
-                      }).join('')}
-                    </ul>
-                  </div>`
-                }
-
-                const responseTemplate = `
-                  <div class="app">
-                    ${content}
-                    ${treeRender(areaTree)}
-                  </div>
-                `
-                app.get('/', (req, res) => res.send(responseTemplate)
-
-                app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-                ```
-              </script>
-            </div>
           </section>
         </section>
 
@@ -333,6 +212,109 @@
         </section>
 
         <section>
+          <h4>SSR可以应用的场景</h4>
+          <ul style="font-size: 60%;">
+            <li style="margin-bottom: 0.8em;" class="fragment">对SEO有要求</li>
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              对首屏渲染时间有要求（如一些活动页H5）
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h4>基于Vue的服务端渲染社区成熟的解决方案</h4>
+          <ul style="font-size: 60%;">
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              <a href="https://nuxtjs.org/">Nuxt.js 适合大型应用开发</a>
+            </li>
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              <a href="https://vuepress.vuejs.org/">
+                VuePress 适合用于编写文档（类Hexo，wordPress... markdown => html）
+              </a>
+            </li>
+            <li style="margin-bottom: 0.8em;" class="fragment">
+              <a href="https://github.com/chrisvfritz/prerender-spa-plugin">
+                预渲染解决方案
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h4>Talk is cheap，show me the code</h4>
+          </section>
+          <section>
+            <h4>我们用Node.js实现一个简易的SSR</h4>
+          </section>
+          <section>
+            <div data-markdown>
+              <script type="text/template">
+                ```js
+                const express = require('express') // 一个Node.js的MVC框架
+                const app = express()
+                const port = process.env.PORT || 3000
+
+                const msg = 'Hello World'
+
+                // 原理其实就是拼接模板字符串
+                const content = `<div id="msg">${msg}</div>`
+
+                const responseTemplate = `
+                  <div class="app">
+                    ${content}
+                  </div>
+                `
+                app.get('/', (req, res) => res.send(responseTemplate)
+
+                app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+                ```
+              </script>
+            </div>
+          </section>
+          <section>
+            <h4>加上Vue有如何呢</h4>
+          </section>
+          <section>
+            <div data-markdown>
+              <script type="text/template">
+                ```js
+                const Vue = require('vue')
+                const server = require('express')()
+                const renderer = require('vue-server-renderer').createRenderer()
+                const port = process.env.PORT || 3000
+
+                server.get('*', (req, res) => {
+                  const app = new Vue({
+                    data: {
+                      url: req.url
+                    },
+                    template: `<div>访问的 URL 是： {{ url }}</div>`
+                  })
+
+                  renderer.renderToString(app, (err, html) => {
+                    if (err) {
+                      res.status(500).end('Internal Server Error')
+                      return
+                    }
+                    res.end(`
+                      <!DOCTYPE html>
+                      <html lang="en">
+                        <head><title>Hello</title></head>
+                        <body>${html}</body>
+                      </html>
+                    `)
+                  })
+                })
+
+                server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+                ```
+              </script>
+            </div>
+          </section>
+        </section>
+
+        <section>
           <h4>Vue SSR官方指南</h4>
           <ul style="font-size: 60%;">
             <li>
@@ -347,7 +329,7 @@
             <h4>如有错误，欢迎指正</h4>
           </section>
           <section>
-            <h4>感谢大家在百忙之中抽空来摸鱼</h4>
+            <h4>感谢大家在百忙之中抽空来聆听（摸鱼）</h4>
             <p style="position: fixed; bottom: 16px; left: 16px;">以上。</p>
           </section>
         </section>
